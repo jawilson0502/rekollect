@@ -64,3 +64,30 @@ def get_processlist(filename):
         pslist.append(proc)
 
     return pslist
+
+def get_networkconns(filename):
+    '''Gets the network connections after determining what OS this is from
+    Returns a dict containing network connections'''
+    sess = create_session(filename)
+    imageinfo = get_imageinfo(filename)
+
+    # Determine what platform
+    win_build = 'NT Build'
+    conns = []
+    if win_build in imageinfo:
+        if 'xp' in imageinfo[win_build]:
+            results = sess.plugins.connscan()
+            for result in results:
+                # Each result is a tuple of netobject, src ip:port,
+                # dest ip:port, pid, in that order
+                conn = {}
+                conn['local_ip'], conn['local_port'] = result[1].split(':')
+                conn['remote_ip'], conn['remote_port'] = result[2].split(':')
+                # pid comes back as a pid object, str makes it more useable
+                conn['pid'] = str(result[3])
+                conns.append(conn)
+        elif 'win7' in imageinfo[win_build]:
+            pass
+        else:
+            return
+    return conns

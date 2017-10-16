@@ -17,9 +17,10 @@ def create_session(filename):
     return s
 
 
-def get_imageinfo(sess):
+def get_imageinfo(filename):
     '''Gets the basic image info provided by Rekall
     Returns a dict of image information'''
+    sess = create_session(filename)
 
     # Returns as a rekall object
     info = sess.plugins.imageinfo()
@@ -35,10 +36,10 @@ def get_imageinfo(sess):
     return info_dict
 
 
-def get_processlist(sess):
+def get_processlist(filename):
     '''Gets the basic processlist provided by Rekall
     Returns a dict of all the process from processlist'''
-    
+    sess = create_session(filename)
     # ps is a rekall object
     ps = sess.plugins.pslist()
 

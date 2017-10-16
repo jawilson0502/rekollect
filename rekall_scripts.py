@@ -86,6 +86,8 @@ def get_networkconns(filename):
             for result in results:
                 # Each result is a tuple of netobject, src ip:port,
                 # dest ip:port, pid, in that order
+                # TODO: Find a way to get protocol
+                # TODO: Fix bug that will break this with ipv6
                 conn = {}
                 conn['local_ip'], conn['local_port'] = result[1].split(':')
                 conn['remote_ip'], conn['remote_port'] = result[2].split(':')
@@ -93,7 +95,37 @@ def get_networkconns(filename):
                 conn['pid'] = str(result[3])
                 conns.append(conn)
         elif 'win7' in imageinfo[win_build]:
-            pass
+            results = sess.plugins.netscan()
+            for result in results:
+                # Each result is a tuple of offset, protocol, local_addr,
+                # remote_addr, state, pid, owner, created
+                conn = {}
+                conn['protocol'] = result[1]
+                if 'v6' in conn['protocol']:
+                    # Break up ipv6 address into ip and port
+                    ipv6_addr = result[2].split(':')
+                    local_port = ipv6_addr[-1]
+                    local_ip = ':'.join(ipv6_addr[:-1])
+                    conn['local_ip'] = local_ip
+                    conn['local_port'] = local_port
+
+                    ipv6_addr = result[3].split(':')
+                    remote_port = ipv6_addr[-1]
+                    remote_ip = ':'.join(ipv6_addr[:-1])
+                    conn['remote_ip'] = remote_ip
+                    conn['remote_port'] = remote_port
+                else:
+                    # Assuming not ipv6, then ipv4
+                    conn['local_ip'], conn['local_port'] = result[2].split(':')
+                    conn['remote_ip'], conn['remote_port'] = result[3].split(':')
+                conn['state'] = result[4]
+                # pid comes back as a pid object, str makes it more useable
+                conn['pid'] = str(result[5])
+                # create_time comes back as a createtime objecct, str makes
+                # it more useable
+                conn['create_time'] = str(result[7])
+                conns.append(conn)
+
         else:
             return
     return conns

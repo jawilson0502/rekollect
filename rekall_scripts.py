@@ -1,24 +1,27 @@
-import json
+'''Functions to wrap rekall and return python dictionaries of data'''
 import yaml
 
 from rekall import session
-from rekall import plugins
 
 
 with open("config.yaml", 'r') as f:
-    config = yaml.load(f)['rekall']
+    CONFIG = yaml.load(f)['rekall']
 
 def create_session(filename):
+    '''Create the Rekall session necessary to run plugins
+
+    Returns the session created'''
     s = session.Session(
         filename=filename,
-        profile_path = [config['profile_path']],
-        autodetect = ["rsds"]
+        profile_path=[CONFIG['profile_path']],
+        autodetect=["rsds"]
     )
     return s
 
 
 def get_imageinfo(filename):
     '''Gets the basic image info provided by Rekall
+
     Returns a dict of image information'''
     sess = create_session(filename)
 
@@ -26,11 +29,11 @@ def get_imageinfo(filename):
     info = sess.plugins.imageinfo()
 
     #Convert rekall object to python dict
-    info_dict = {} 
+    info_dict = {}
     for line in info:
-        if type(line) == tuple:
+        if isinstance(line, tuple):
             info_dict[line[0]] = str(line[1])
-        elif type(line) == dict: 
+        elif isinstance(line, dict):
             info_dict[line['key']] = str(line['value'])
 
     return info_dict
@@ -38,6 +41,7 @@ def get_imageinfo(filename):
 
 def get_processlist(filename):
     '''Gets the basic processlist provided by Rekall
+
     Returns a dict of all the process from processlist'''
     sess = create_session(filename)
     # ps is a rekall object
@@ -67,6 +71,7 @@ def get_processlist(filename):
 
 def get_networkconns(filename):
     '''Gets the network connections after determining what OS this is from
+
     Returns a dict containing network connections'''
     sess = create_session(filename)
     imageinfo = get_imageinfo(filename)

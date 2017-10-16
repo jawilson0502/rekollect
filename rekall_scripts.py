@@ -1,6 +1,7 @@
 '''Functions to wrap rekall and return python dictionaries of data'''
 import yaml
 
+from rekall import plugins
 from rekall import session
 
 

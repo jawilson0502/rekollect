@@ -129,3 +129,42 @@ def get_networkconns(filename):
         else:
             return
     return conns
+
+def get_filescan(filename):
+    '''Gets all the filenames of files open in memory
+
+    Returns a dictionary of results'''
+
+    sess = create_session(filename)
+
+    files = sess.plugins.filescan()
+    results = []
+    for result in files:
+        # Each result is a dictionary.
+        item = {}
+        item['access'] = result['access']
+        item['offset'] = result['offset']
+        item['pid'] = str(result['Owner'].pid)
+        item['path'] = result['path']
+        results.append(item)
+
+    return results
+
+def get_shimcache(filename):
+    '''Gets the shimecache registry value
+
+    returns a dictionary of results'''
+
+    sess = create_session(filename)
+    shimcache = sess.plugins.shimcachemem()
+    results = []
+
+    for result in shimcache:
+        # Each result is a dictionary
+        item = {}
+        item['path'] = str(result['Path'])
+        item['last_mod'] = str(result['last_mod'])
+        item['last_update'] = str(result['last_update'])
+        results.append(item)
+
+    return results

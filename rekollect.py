@@ -1,4 +1,4 @@
-'''Functions to wrap rekall and return python dictionaries of data'''
+'''Object to wrap rekall and return python dictionaries of data'''
 import yaml
 
 from rekall import plugins
@@ -14,11 +14,11 @@ class Rekollect(object):
         self.set_config()
         self.filename = filename
         self.create_session()
-        self.get_imageinfo()
-        self.get_processlist()
-        self.get_networkconns()
-        self.get_filescan()
-        self.get_shimcache()
+        self.set_imageinfo()
+        self.set_processlist()
+        self.set_networkconns()
+        self.set_filescan()
+        self.set_shimcache()
 
     def set_config(self):
         '''Sets the config needed for Rekall'''
@@ -36,7 +36,7 @@ class Rekollect(object):
         )
 
 
-    def get_imageinfo(self):
+    def set_imageinfo(self):
         '''Gets the basic image info provided by Rekall
 
         Sets self.imageinfo with dict of image information'''
@@ -53,7 +53,7 @@ class Rekollect(object):
                 self.imageinfo[line['key']] = str(line['value'])
 
 
-    def get_processlist(self):
+    def set_processlist(self):
         '''Gets the basic processlist provided by Rekall
 
         Sets self.pslist with a dict of all the process from processlist'''
@@ -81,7 +81,7 @@ class Rekollect(object):
             self.pslist.append(proc)
 
 
-    def get_networkconns(self):
+    def set_networkconns(self):
         '''Gets the network connections after determining what OS this is from
 
         Sets self.networkconns a dict containing network connections'''
@@ -139,7 +139,7 @@ class Rekollect(object):
                 return
 
 
-    def get_filescan(self):
+    def set_filescan(self):
         '''Gets all the filenames of files open in memory
 
         Sets self.filescan with a list of open files'''
@@ -157,7 +157,7 @@ class Rekollect(object):
             self.filescan.append(item)
 
 
-    def get_shimcache(self):
+    def set_shimcache(self):
         '''Gets the shimecache registry value
 
         Sets self.shimcache with recently used exes'''

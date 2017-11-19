@@ -28,11 +28,15 @@ con, meta = connect(CONFIG['user'], CONFIG['password'], CONFIG['db'])
 # Below are all the tables that need to be created
 results = Table('results', meta,
                 Column('date', sqlalchemy.types.DateTime),
-                Column('file_name', String),
-                Column('file_path', String),
+                Column('file_id', String),
                 Column('plugin', String),
                 Column('result', sqlalchemy.types.JSON))
 
+files = Table('files', meta,
+              Column('id', Integer, primary_key=True),
+              Column('filename', String),
+              Column('case_name', String)
+             )
 
 # Create the above table(s)
 meta.create_all(con)

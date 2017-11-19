@@ -2,7 +2,7 @@ from web_rekollect import app, db
 import models
 
 import os
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, render_template, url_for
 from werkzeug.utils import secure_filename
 
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -14,7 +14,7 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    return "Welcome to Rekollect!"
+    return render_template('index.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -29,6 +29,7 @@ def upload():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
+            # TODO: Check if filename already exists
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -39,12 +40,4 @@ def upload():
 
             return redirect(url_for('index'))
 
-    return '''
-    <! doctype html>
-    <title>Upload new file</title>
-    <h1>Upload new file</h1>
-    <form method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-        <input type=submit value=Upload>
-    </form>
-    '''
+    return render_template('upload.html')

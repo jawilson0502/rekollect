@@ -1,4 +1,5 @@
-from web_rekollect import app
+from web_rekollect import app, db
+import models
 
 import os
 from flask import Flask, request, redirect, url_for
@@ -32,6 +33,10 @@ def upload():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             # Insert database function to create row in "files" table
+            file_db = models.Files(file_name=filename)
+            db.session.add(file_db)
+            db.session.commit()
+
             return redirect(url_for('index'))
 
     return '''

@@ -30,9 +30,11 @@
         </thead>
         <tbody>
 		  {% for result in results %}
-			<tr>
+          <tr>
                 <td>{{ result.id }}</td>
-                <td>{{ result.file_name }}</td>
+                <td><a href="{{ url_for('file_info', file_name=result.file_name) }}">
+                        {{ result.file_name }}
+                </a></td>
                 <td>{{ result.date }}</td>
 			</tr>
 		  {% endfor %}

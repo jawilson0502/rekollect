@@ -44,3 +44,8 @@ def upload():
     results = models.Files.query.all()
     #return str(results)
     return render_template('upload.html', results=results)
+
+@app.route('/file/<file_name>')
+def file_info(file_name):
+    '''Displays basic information about the memory image upload'''
+    return "You made it!"

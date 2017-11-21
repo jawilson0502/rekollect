@@ -48,4 +48,5 @@ def upload():
 @app.route('/file/<file_name>')
 def file_info(file_name):
     '''Displays basic information about the memory image upload'''
-    return "You made it!"
+
+    return render_template("file_info.html", file_name=file_name)

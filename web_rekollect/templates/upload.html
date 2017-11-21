@@ -1,40 +1,48 @@
 {% extends "_layout.html" %}
 {% block body %}
-  <div class="container">
+<div class="container-fluid">
+  <div class="header center">
     <h1>Uploaded Files</h1>
   </div>
-
-  <div class="container">
-    <div class="card">
-      <div class="card-header">
-          Upload New Memory Files
-      </div>
-      <div class="card-body">
-        <form>
-            <div class="form-group">
-              <label class="btn btn-secondary btn-file">
-                Browse <input type="file" style="display: none;">
-              </label>
-              <button type="submit" class="btn btn-primary">Submit File</button>
-            </div>
-        </form>
-      </div>
+  <div class="card">
+    <div class="card-header">
+        Upload New Memory Files
+    </div>
+    <div class="card-body">
+      <form class="form-inline" method="post" enctype="multipart/form-data">
+		<div class="form-group">
+		  <input type="file" name="file">
+          <input type="submit" class="btn btn-primary" value=Upload>
+		</div>
+      </form>
     </div>
   </div>
 
-  <div class="container">
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">File Name</th>
-          <th scope="col">Date Uploaded</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-      </tbody>
-    </table>
+  <div class="card">
+    <div class="card-body">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">File Name</th>
+            <th scope="col">Date Uploaded</th>
+          </tr>
+        </thead>
+        <tbody>
+		  {% for result in results %}
+			<tr>
+                <td>{{ result.id }}</td>
+                <td>{{ result.file_name }}</td>
+                <td>{{ result.date }}</td>
+			</tr>
+		  {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>
 
+{% endblock %}
+
+{% block extra_scripts %}
 {% endblock %}

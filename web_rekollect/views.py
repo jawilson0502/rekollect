@@ -38,6 +38,9 @@ def upload():
             db.session.add(file_db)
             db.session.commit()
 
-            return redirect(url_for('index'))
+            return redirect(url_for('upload'))
 
-    return render_template('upload.html')
+    # If a GET request, pull all current files
+    results = models.Files.query.all()
+    #return str(results)
+    return render_template('upload.html', results=results)

@@ -10,7 +10,16 @@
       <h5>Basic Memory Image Information</h5>
     </div>
     <div class="card-body">
-        TODO: fill with upload information
+      <table class="table table-bordered">
+        <tbody>
+          {% for key in results['imageinfo'] %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ results['imageinfo'][key] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 

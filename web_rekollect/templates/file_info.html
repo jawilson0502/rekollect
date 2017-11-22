@@ -73,7 +73,6 @@
           </tr>
         </thead>
         <tbody>
-        <tbody>
             {% for conn in results['networkconns'] %}
               <tr>
                 <td>{{ conn['local_ip'] }}</td>
@@ -103,6 +102,14 @@
           </tr>
         </thead>
         <tbody>
+            {% for file in results['filescan'] %}
+              <tr>
+                <td>{{ file['pid'] }}</td>
+                <td>{{ file['offset'] }}</td>
+                <td>{{ file['path'] }}</td>
+                <td>{{ file['access'] }}</td>
+              </tr>
+            {% endfor %}
         </tbody>
       </table>
     </div>

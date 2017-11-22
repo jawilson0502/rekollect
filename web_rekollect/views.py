@@ -1,7 +1,9 @@
 from web_rekollect import app, db
-import models
+import web_rekollect.models as models
+import web_rekollect.rekollect as rekollect
 
 import os
+import sys
 from flask import Flask, request, redirect, render_template, url_for
 from werkzeug.utils import secure_filename
 

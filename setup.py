@@ -10,6 +10,6 @@ setup(
         'Flask-Script',
         'Flask-SQLAlchemy',
         'psycopg2',
-        'rekall==1.6.0',
+        'rekall',
     ],
 )

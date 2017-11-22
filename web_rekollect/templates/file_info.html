@@ -139,6 +139,13 @@
           </tr>
         </thead>
         <tbody>
+            {% for file in results['shimcache'] %}
+              <tr>
+                <td>{{ file['path'] }}</td>
+                <td>{{ file['last_mod'] }}</td>
+                <td>{{ file['last_update'] }}</td>
+              </tr>
+            {% endfor %}
         </tbody>
       </table>
     </div>

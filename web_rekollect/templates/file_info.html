@@ -73,6 +73,16 @@
           </tr>
         </thead>
         <tbody>
+        <tbody>
+            {% for conn in results['networkconns'] %}
+              <tr>
+                <td>{{ conn['local_ip'] }}</td>
+                <td>{{ conn['local_port'] }}</td>
+                <td>{{ conn['remote_ip'] }}</td>
+                <td>{{ conn['remote_port'] }}</td>
+                <td>{{ conn['pid'] }}</td>
+              </tr>
+            {% endfor %}
         </tbody>
       </table>
     </div>

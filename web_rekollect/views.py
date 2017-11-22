@@ -48,5 +48,35 @@ def upload():
 @app.route('/file/<file_name>')
 def file_info(file_name):
     '''Displays basic information about the memory image upload'''
+    file_dbresult = models.Files.query.filter_by(file_name=file_name).first()
+    file_id = file_dbresult.id
+    plugin_result = models.Results.query.filter_by(file_id=file_id).all()
 
-    return render_template("file_info.html", file_name=file_name)
+    if not plugin_result:
+        print("Debug did not find results")
+        file_path = os.path.join("uploads", file_name)
+        file_object = rekollect.Rekollect(file_path)
+
+        imageinfo = models.Results(file_id=file_id, plugin="imageinfo",
+                                   result=file_object.imageinfo)
+        pslist = models.Results(file_id=file_id, plugin="pslist",
+                                result=file_object.pslist)
+        networkconns = models.Results(file_id=file_id, plugin="networkconns",
+                                      result=file_object.networkconns)
+        filescan = models.Results(file_id=file_id, plugin="filescan",
+                                  result=file_object.filescan)
+        shimcache = models.Results(file_id=file_id, plugin="shimcache",
+                                result=file_object.shimcache)
+
+        db.session.add_all([imageinfo, pslist, networkconns,
+                            filescan, shimcache])
+        db.session.commit()
+
+        plugin_result = models.Results.query.filter_by(file_id=file_id).all()
+
+    results={}
+    for result in plugin_result:
+        results[result.plugin] = result.result
+
+    return render_template("file_info.html", file_name=file_name,
+                           results=results)

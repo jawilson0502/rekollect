@@ -25,9 +25,24 @@
             <th scope="col">PID</th>
             <th scope="col">Process Name</th>
             <th scope="col">Creation Time</th>
+            <th scope="col">Exit Time</th>
+            <th scope="col">PPID</th>
+            <th scope="col">Handle Count</th>
+            <th scope="col">Thread Count</th>
           </tr>
         </thead>
         <tbody>
+            {% for proc in results['pslist'] %}
+              <tr>
+                <td>{{ proc['pid'] }}</td>
+                <td>{{ proc['name'] }}</td>
+                <td>{{ proc['process_create_time'] }}</td>
+                <td>{{ proc['process_exit_time'] }}</td>
+                <td>{{ proc['ppid'] }}</td>
+                <td>{{ proc['handle_count'] }}</td>
+                <td>{{ proc['thread_count'] }}</td>
+              </tr>
+            {% endfor %}
         </tbody>
       </table>
     </div>

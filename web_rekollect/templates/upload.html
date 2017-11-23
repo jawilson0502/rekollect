@@ -20,7 +20,7 @@
 
   <div class="card">
     <div class="card-body">
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered display" id="filetable">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -47,4 +47,13 @@
 {% endblock %}
 
 {% block extra_scripts %}
+<script>
+$(document).ready( function () {
+    $('#filetable').DataTable( {
+        paging: false
+    });
+
+});
+</script>
+
 {% endblock %}

@@ -16,7 +16,8 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    results = models.Files.query.all()
+    return render_template('index.html', results=results)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():

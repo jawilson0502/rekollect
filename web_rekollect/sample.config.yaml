@@ -1,2 +1,5 @@
 rekall:
-    profile_path: ./rekall-profiles
+    profile_path: rekollect/rekall-profiles
+
+postgres:
+    uri: 'postgresql://username:password@127.0.0.1:5432/rekollect'

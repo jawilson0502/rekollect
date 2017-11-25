@@ -1,0 +1,16 @@
+# Files to ignore by git
+
+*~
+
+# Generic auto-generated build files
+*.pyc
+
+# Specific auto-generated build files
+*.egg-info
+
+# Virtual environment
+venv/*
+
+# Other
+*.vmem
+web_rekollect/migrations

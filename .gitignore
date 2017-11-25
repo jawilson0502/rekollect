@@ -12,5 +12,6 @@
 venv/*
 
 # Other
+*.bak
 *.vmem
 web_rekollect/migrations

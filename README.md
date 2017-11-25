@@ -28,7 +28,7 @@ $ python manage.py db upgrade
 $ export FLASK_APP="web_rekollect"
 $ flask run
 ```
-You can now connect to your instance at 127.0.0.1:5000
+You can now connect to your instance at `127.0.0.1:5000`
 
 ## Plugins supported
 * imageinfo

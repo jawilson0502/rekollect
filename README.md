@@ -5,7 +5,7 @@ Rekollect is an open source  web application for the [Rekall Memory Forensics Fr
 This has been tested with Debian 9 and Ubuntu 16.04 LTS with Python 3
 
 ## Install Instructions
-Rekollect requires Python 3 and is best run in a virtual environment. Rekollect also requires rekall-profiles to be downloaded locally to be referenced. Make sure to edit your `rekollect/web_rekollect/config.yaml` to be appropriate from your environment.
+Rekollect requires Python 3 and is best run in a virtual environment. Rekollect also requires rekall-profiles to be downloaded locally to be referenced. Make sure to edit your `rekollect/web_rekollect/config.yaml` to be appropriate from your environment. Postgresql will also need to be configured to allow password logins.
 
 Dependencies:
 ```
@@ -16,11 +16,13 @@ Instructions:
 $ git clone https://github.com/jawilson0502/rekollect.git
 $ cd rekollect
 $ git clone https://github.com/google/rekall-profiles.git
-$ virtualenv --python=python3 venv
+$ sudo pip3 install --upgrade pip
+$ sudo pip install virtualenv
+$ virtualenv venv
 $ source venv/bin/activate
 $ pip install --editable .
 $ cd web_rekollect
-$ sudo -u postgres createuser -d <username> -w
+$ sudo -u postgres createuser -d <username> -W
 $ createdb rekollect
 $ python manage.py db init
 $ python manage.py db migrate

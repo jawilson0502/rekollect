@@ -96,10 +96,22 @@ class Rekollect(object):
                     # Each result is a tuple of netobject, src ip:port,
                     # dest ip:port, pid, in that order
                     # TODO: Find a way to get protocol
-                    # TODO: Fix bug that will break this with ipv6
                     conn = {}
-                    conn['local_ip'], conn['local_port'] = result[1].split(':')
-                    conn['remote_ip'], conn['remote_port'] = result[2].split(':')
+                    local = result[1].split(':')
+                    if len(local) > 2:
+                        conn['local_port'] = local[-1]
+                        local_ip = ':'.join(local[:-1])
+                        conn['local_ip'] = local_ip
+                    else:
+                        conn['local_ip'], conn['local_port'] = local
+
+                    remote = result[2].split(':')
+                    if len(remote) > 2:
+                        conn['remote_port'] = remote[-1]
+                        remote_ip = ':'.join(remote[:-1])
+                        conn['remote_ip'] = remote_ip
+                    else:
+                        conn['remote_ip'], conn['remote_port'] = remote
                     # pid comes back as a pid object, str makes it more useable
                     conn['pid'] = str(result[3])
                     self.networkconns.append(conn)
@@ -125,8 +137,10 @@ class Rekollect(object):
                         conn['remote_port'] = remote_port
                     else:
                         # Assuming not ipv6, then ipv4
-                        conn['local_ip'], conn['local_port'] = result[2].split(':')
-                        conn['remote_ip'], conn['remote_port'] = result[3].split(':')
+                        local = result[2].split(':')
+                        conn['local_ip'], conn['local_port'] = local
+                        remote = result[3].split(':')
+                        conn['remote_ip'], conn['remote_port'] = remote
                     conn['state'] = result[4]
                     # pid comes back as a pid object, str makes it more useable
                     conn['pid'] = str(result[5])

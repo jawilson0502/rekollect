@@ -114,6 +114,7 @@ class Rekollect(object):
                         conn['remote_ip'], conn['remote_port'] = remote
                     # pid comes back as a pid object, str makes it more useable
                     conn['pid'] = str(result[3])
+                    conn['state'] = '-'
                     self.networkconns.append(conn)
             elif 'win7' in self.imageinfo[win_build]:
                 results = self.session.plugins.netscan()
@@ -141,7 +142,7 @@ class Rekollect(object):
                         conn['local_ip'], conn['local_port'] = local
                         remote = result[3].split(':')
                         conn['remote_ip'], conn['remote_port'] = remote
-                    conn['state'] = result[4]
+                    conn['state'] = str(result[4])
                     # pid comes back as a pid object, str makes it more useable
                     conn['pid'] = str(result[5])
                     # create_time comes back as a createtime objecct, str makes

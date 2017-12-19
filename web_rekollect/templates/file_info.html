@@ -76,6 +76,7 @@
             <th scope="col">Remote IP</th>
             <th scope="col">Remote Port</th>
             <th scope="col">PID</th>
+            <th scope="col">State</th>
           </tr>
         </thead>
         <tbody>
@@ -86,6 +87,7 @@
                 <td>{{ conn['remote_ip'] }}</td>
                 <td>{{ conn['remote_port'] }}</td>
                 <td>{{ conn['pid'] }}</td>
+                <td>{{ conn['state'] }}</td>
               </tr>
             {% endfor %}
         </tbody>

@@ -198,4 +198,6 @@ class Rekollect(object):
             hive_path, hive_offset = hive_name.split('@')
             hive['path'] = hive_path
             hive['offset'] = hive_offset
-            hive.append(hive)
+            hives.append(hive)
+
+        self.hives = hives

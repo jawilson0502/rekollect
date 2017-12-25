@@ -186,3 +186,16 @@ class Rekollect(object):
             item['last_mod'] = str(result['last_mod'])
             item['last_update'] = str(result['last_update'])
             self.shimcache.append(item)
+
+    def list_hives(self):
+        '''Finds all the registry hives and offsets for them'''
+        results = self.session.plugins.hives()
+        hives = []
+
+        for result in results.list_hives():
+            hive = {}
+            hive_name = result.Name
+            hive_path, hive_offset = hive_name.split('@')
+            hive['path'] = hive_path
+            hive['offset'] = hive_offset
+            hive.append(hive)
